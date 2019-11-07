@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Desafio.Models
 {
-    public class UserCompany
+    public class UserCompany 
     {
         public int UserId { get; set; }
         public User User { get; set; }

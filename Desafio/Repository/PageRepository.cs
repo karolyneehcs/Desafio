@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Desafio.Repository
 {
-    public class AccessRepository : Repository<Access>
+    public class PageRepository : Repository<Page>
     {
-        private readonly DesafioContext _context;
-        public AccessRepository(DesafioContext context) : base(context)
+        public PageRepository(DesafioContext context) : base(context)
         {
+
         }
     }
 }
