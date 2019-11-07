@@ -28,5 +28,12 @@ namespace Desafio.Controllers
             return Ok(_accessRepository.GetAll());
           
         }
+
+        [HttpGet("{id}")]
+        public ActionResult Get(int Id)
+        {
+            return Ok(_accessRepository.GetById(Id));
+        }
+
     }
 }
