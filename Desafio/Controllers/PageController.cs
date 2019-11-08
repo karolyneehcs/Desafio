@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Desafio.Models;
 using Desafio.Repository;
+using Desafio.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +35,36 @@ namespace Desafio.Controllers
         public ActionResult Get(int Id)
         {
             return Ok(_pageRepository.GetById(Id));
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int Id)
+        {
+            return Ok(_mapper.Map<PageViewModel>(_pageRepository.GetById(Id)));
+        }
+
+        [HttpGet]
+        public ActionResult GetAll_()
+        {
+            return Ok(_mapper.Map<IEnumerable<PageViewModel>>(_pageRepository.GetAll()));
+        }
+
+        [HttpPut]
+        public ActionResult Update(PageViewModel page)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values.SelectMany(a => a.Errors).Select(a => a.ErrorMessage));
+            }
+
+            try
+            {
+                return Ok(_pageRepository.Update(_mapper.Map<Page>(page)));
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

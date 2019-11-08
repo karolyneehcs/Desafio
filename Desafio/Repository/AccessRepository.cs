@@ -9,7 +9,6 @@ namespace Desafio.Repository
 {
     public class AccessRepository : Repository<Access>
     {
-        private readonly DesafioContext _context;
         public AccessRepository(DesafioContext context) : base(context)
         {
         }
