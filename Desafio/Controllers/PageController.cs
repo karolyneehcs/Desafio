@@ -49,6 +49,19 @@ namespace Desafio.Controllers
             return Ok(_mapper.Map<IEnumerable<PageViewModel>>(_pageRepository.GetAll()));
         }
 
+        [HttpPost]
+        public ActionResult Create(PageViewModel page)
+        {
+            var pagina = _pageRepository.Add(_mapper.Map<User>(page));
+
+            if (pagina == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mapper.Map<UserViewModel>(pagina));
+        }
+
         [HttpPut]
         public ActionResult Update(PageViewModel page)
         {

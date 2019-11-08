@@ -36,5 +36,11 @@ namespace Desafio.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public ActionResult GetById(int Id)
+        {
+            return Ok(_mapper.Map<AccessRepository>(_accessRepository.GetById(Id)));
+        }
+
     }
 }

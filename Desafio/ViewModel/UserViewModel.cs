@@ -7,5 +7,10 @@ namespace Desafio.ViewModel
 {
     public class UserViewModel
     {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Senha { get; set; }
+        public ICollection<PageViewModel> Pages { get; set; }
+        //user company era para estar aqui
     }
 }

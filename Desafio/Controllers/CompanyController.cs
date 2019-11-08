@@ -49,6 +49,19 @@ namespace Desafio.Controllers
             return Ok(_mapper.Map<IEnumerable<CompanyViewModel>>(_companyRepository.GetAll()));
         }
 
+        [HttpPost]
+        public ActionResult Create(CompanyViewModel company)
+        {
+            var companhia = _companyRepository.Add(_mapper.Map<Company>(company));
+
+            if (companhia == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_mapper.Map<CompanyViewModel>(companhia));
+        }
+
         [HttpPut]
         public ActionResult Update(CompanyViewModel company)
         {
