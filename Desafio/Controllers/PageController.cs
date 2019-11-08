@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Desafio.Filters;
 using Desafio.Models;
 using Desafio.Repository;
 using Desafio.ViewModel;
@@ -13,6 +14,7 @@ namespace Desafio.Controllers
 {
     [Route("api/page")]
     [ApiController]
+    [Authorization]
     public class PageController : ControllerBase
     {
         private readonly PageRepository _pageRepository;
@@ -52,14 +54,14 @@ namespace Desafio.Controllers
         [HttpPost]
         public ActionResult Create(PageViewModel page)
         {
-            var pagina = _pageRepository.Add(_mapper.Map<User>(page));
+            var pagina = _pageRepository.Add(_mapper.Map<Page>(page));
 
             if (pagina == null)
             {
                 return BadRequest();
             }
 
-            return Ok(_mapper.Map<UserViewModel>(pagina));
+            return Ok(_mapper.Map<PageViewModel>(pagina));
         }
 
         [HttpPut]

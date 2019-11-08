@@ -40,11 +40,11 @@ namespace Desafio.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int Id)
         {
-            return Ok(_mapper.Map<UserViewModel>(_userRepository.GetById(Id)));
+            return Ok(_mapper.Map<PageViewModel>(_userRepository.GetById(Id)));
         }
 
         [HttpPost]
-        public ActionResult Create(UserViewModel user)
+        public ActionResult Create(PageViewModel user)
         {
             var usuario = _userRepository.Add(_mapper.Map<User>(user)); 
 
@@ -53,7 +53,7 @@ namespace Desafio.Controllers
                 return BadRequest();
             }
 
-            return Ok(_mapper.Map<UserViewModel>(usuario)); 
+            return Ok(_mapper.Map<PageViewModel>(usuario)); 
         }
     }
 }

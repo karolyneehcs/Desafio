@@ -12,7 +12,7 @@ namespace Desafio.ViewModel
         [Required]
         public string Name { get; set; }
         public int OwnerId { get; set; }
-        public UserViewModel Owner { get; set; }
+        public PageViewModel Owner { get; set; }
         public int CompanyId { get; set; }
         public CompanyViewModel Company { get; set; }
     }
