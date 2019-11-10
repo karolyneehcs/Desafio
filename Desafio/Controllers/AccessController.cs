@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Desafio.Models;
 using Desafio.Repository;
+using Desafio.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,33 +16,33 @@ namespace Desafio.Controllers
     public class AccessController : ControllerBase
     {
         private readonly AccessRepository _accessRepository;
+        private readonly UserRepository _userRepository;
         private readonly IMapper _mapper; 
 
-        public AccessController(AccessRepository accessRepository, IMapper mapper)
+        public AccessController(AccessRepository accessRepository, 
+                                UserRepository userRepository,
+                                IMapper mapper)
         {
             _accessRepository = accessRepository;
+            _userRepository = userRepository;
             _mapper = mapper; 
         }
 
-        [HttpGet]
-        public ActionResult GetAll()
+        [HttpPost]
+        public ActionResult Login(LoginViewModel login)
         {
-            return Ok(_accessRepository.GetAll());
-          
+            var user = _userRepository.CheckPassword(login.Email, login.Password);
+
+            if(user == null)
+            {
+                return BadRequest(new[] { "Email or password invalid" });
+            }
+
+            return Ok(_accessRepository.Add(new Access 
+            { 
+                Token = Guid.NewGuid().ToString(), 
+                UserId = user.Id 
+            }));
         }
-
-        [HttpGet("{id}")]
-        public ActionResult Get(int Id)
-        {
-            return Ok(_accessRepository.GetById(Id));
-        }
-
-
-        [HttpGet("{id}")]
-        public ActionResult GetById(int Id)
-        {
-            return Ok(_mapper.Map<AccessRepository>(_accessRepository.GetById(Id)));
-        }
-
     }
 }

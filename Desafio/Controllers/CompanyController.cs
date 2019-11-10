@@ -24,19 +24,6 @@ namespace Desafio.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public ActionResult GetAll()
-        {
-            return Ok(_companyRepository.GetAll());
-
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult Get(int Id)
-        {
-            return Ok(_companyRepository.GetById(Id));
-        }
-
         [HttpGet("{id}")]
         public ActionResult GetById(int Id)
         {
@@ -52,6 +39,11 @@ namespace Desafio.Controllers
         [HttpPost]
         public ActionResult Create(CompanyViewModel company)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values.SelectMany(a => a.Errors).Select(a => a.ErrorMessage));
+            }
+
             var companhia = _companyRepository.Add(_mapper.Map<Company>(company));
 
             if (companhia == null)

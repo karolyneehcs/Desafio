@@ -13,5 +13,23 @@ namespace Desafio.Repository
         {
 
         }
+
+        private string HashPassword(string Password)
+        {
+            //hash function
+
+            return Password;
+        }
+
+        public User CheckPassword(string email, string password)
+        {
+            return _entity.FirstOrDefault(a => a.Email == email && a.Password == HashPassword(password));
+        }
+
+        public override User Add(User user)
+        {
+            user.Password = HashPassword(user.Password);
+            return base.Add(user);
+        }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using Desafio.Context;
 using Desafio.Filters;
 using Desafio.Models;
 using Desafio.Repository;
 using Desafio.ViewModel;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Desafio.Controllers
@@ -15,36 +12,23 @@ namespace Desafio.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserRepository _userRepository;
+        private readonly AccessRepository _accessRepository;
+        private readonly UserCompanyRepository _userCompanyRepository;
         private readonly IMapper _mapper; 
 
-        public UserController(UserRepository userRepository, IMapper mapper)
+        public UserController(UserRepository userRepository, 
+                              AccessRepository accessRepository,
+                              UserCompanyRepository userCompanyRepository,
+                              IMapper mapper)
         {
             _userRepository = userRepository;
+            _accessRepository = accessRepository;
+            _userCompanyRepository = userCompanyRepository;
             _mapper = mapper; 
         }
 
-        [HttpGet]
-        [Authorization]
-        public IActionResult Get()
-        {
-            var user = HttpContext.Request.Headers["Authorization"];
-            return Ok();
-        }
-
-        [HttpGet("test")]
-        public IActionResult GetTest()
-        {
-            return Ok();
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult GetById(int Id)
-        {
-            return Ok(_mapper.Map<PageViewModel>(_userRepository.GetById(Id)));
-        }
-
         [HttpPost]
-        public ActionResult Create(PageViewModel user)
+        public ActionResult Create(UserViewModel user)
         {
             var usuario = _userRepository.Add(_mapper.Map<User>(user)); 
 
@@ -53,7 +37,27 @@ namespace Desafio.Controllers
                 return BadRequest();
             }
 
-            return Ok(_mapper.Map<PageViewModel>(usuario)); 
+            return Ok(_mapper.Map<UserViewModel>(usuario)); 
+        }
+
+        [HttpGet("represent-company/{companyId}")]
+        [Authorization]
+        public IActionResult RepresentCompany(int companyId)
+        {
+            var access = _accessRepository.GetByToken(HttpContext.Request.Headers["Authorization"]);
+
+            var userCompany = _userCompanyRepository.Add(new UserCompany 
+            {
+                UserId = access.UserId, 
+                CompanyId = companyId 
+            });
+
+            if(userCompany == null)
+            {
+                BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

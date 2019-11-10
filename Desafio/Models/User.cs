@@ -6,7 +6,7 @@ namespace Desafio.Models
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Senha { get; set; }
+        public string Password { get; set; }
         public ICollection<Page> Pages { get; set; }
         public ICollection<UserCompany> Companies { get; set; }
     }

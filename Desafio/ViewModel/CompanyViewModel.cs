@@ -11,6 +11,6 @@ namespace Desafio.ViewModel
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public ICollection<PageViewModel> Pages { get; set; }
+        public IEnumerable<PageViewModel> Pages { get; set; }
     }
 }

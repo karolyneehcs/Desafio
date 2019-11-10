@@ -12,5 +12,10 @@ namespace Desafio.Repository
         public AccessRepository(DesafioContext context) : base(context)
         {
         }
+
+        public Access GetByToken(string token)
+        {
+            return _entity.FirstOrDefault(a => a.Token == token);
+        }
     }
 }

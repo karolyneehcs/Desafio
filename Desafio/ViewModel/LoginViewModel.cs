@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Desafio.ViewModel
 {
-    public class UserViewModel
+    public class LoginViewModel
     {
-        public string Name { get; set; }
         public string Email { get; set; }
-        public ICollection<PageViewModel> Pages { get; set; }
-        //user company era para estar aqui
+        public string Password { get; set; }
     }
 }

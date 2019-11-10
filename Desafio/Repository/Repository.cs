@@ -13,7 +13,6 @@ namespace Desafio.Repository
         protected readonly DesafioContext _context;
         protected readonly DbSet<TEntity> _entity; 
 
-
         public  Repository(DesafioContext context)
         {
             _context = context;
